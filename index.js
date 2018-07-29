@@ -20,13 +20,21 @@ var config = readline.createInterface({
   });
 
 function modifyLine(line) {
-    if (line.includes("proxy")) {
-        if (line.includes("#")) {
-            this.output.write(`${line.replace('#','')}\n`)
+    var vLine = line.trim()
+    if (vLine.includes("proxy")) {
+        if (vLine.includes("#")) {
+            this.output.write(`${vLine.replace('#','\t')}\n`)
+            console.log("Proxy for Git (" + vLine.split('=')[1] + ") turned on..")
         } else {
-            this.output.write(`# ${line}\n`)
+            this.output.write(`#${vLine}\n`)
+            console.log("Proxy for Git (" + vLine.split('=')[1] + ") turned off..")
         }
     } else {
-        this.output.write(`${line}\n`)
+        if (vLine.includes("[")) {
+            this.output.write(`${vLine}\n`)
+        } else {
+            this.output.write(`\t${vLine}\n`)
+        }
+        
     }
 }
